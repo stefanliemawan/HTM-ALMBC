@@ -1,12 +1,10 @@
-import math
 import time
 from collections.abc import Mapping
-from typing import Any, Callable, Dict, List, Optional, Tuple, Union
+from typing import Any, Dict, List, Optional, Tuple, Union
 
 import numpy as np
 import torch
 from sklearn.utils.class_weight import compute_class_weight
-from torch.utils.data import Dataset
 from transformers import Trainer
 
 

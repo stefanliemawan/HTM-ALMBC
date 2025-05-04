@@ -1,5 +1,3 @@
-import sys
-
 import numpy as np
 import pandas as pd
 import tensorflow as tf
@@ -9,27 +7,16 @@ from sklearn.metrics import (
     classification_report,
     f1_score,
     precision_score,
-    r2_score,
     recall_score,
 )
 from sklearn.utils.class_weight import compute_class_weight
-from tensorflow.keras.callbacks import EarlyStopping, LearningRateScheduler
 from tensorflow.keras.layers import Dense, Dropout
 from tensorflow.keras.models import Sequential
-from tensorflow.keras.regularizers import l2
 from tensorflow.keras.utils import to_categorical
 
-try:
-    DATASET_VERSION = sys.argv[1]
-except IndexError:
-    DATASET_VERSION = "vx"
-
-print(f"dataset {DATASET_VERSION}")
-
-
-train_df = pd.read_csv(f"../dataset/{DATASET_VERSION}/train.csv", index_col=0)
-test_df = pd.read_csv(f"../dataset/{DATASET_VERSION}/test.csv", index_col=0)
-valid_df = pd.read_csv(f"../dataset/{DATASET_VERSION}/valid.csv", index_col=0)
+train_df = pd.read_csv(f"../dataset/train.csv", index_col=0)
+test_df = pd.read_csv(f"../dataset/test.csv", index_col=0)
+valid_df = pd.read_csv(f"../dataset/valid.csv", index_col=0)
 
 train_df, test_df, valid_df = functions.generate_title_content_features(
     train_df, test_df, valid_df
@@ -105,33 +92,3 @@ print(
         "f1": f1,
     }
 )
-
-# 10 epoch, bow, title + content
-#               precision    recall  f1-score   support
-
-#            0       0.38      0.44      0.41        27
-#            1       0.33      0.35      0.34        54
-#            2       0.41      0.42      0.42       104
-#            3       0.88      0.85      0.86       384
-
-#     accuracy                           0.71       569
-#    macro avg       0.50      0.52      0.51       569
-# weighted avg       0.72      0.71      0.71       569
-
-# {'precision': 0.7162298537356339, 'recall': 0.7065026362038664, 'f1': 0.711064316646461}
-
-# 10 epoch, tfidf, title + content
-#               precision    recall  f1-score   support
-
-#            0       0.26      0.63      0.37        27
-#            1       0.40      0.07      0.12        54
-#            2       0.36      0.48      0.41       104
-#            3       0.88      0.82      0.85       384
-
-#     accuracy                           0.68       569
-#    macro avg       0.48      0.50      0.44       569
-# weighted avg       0.71      0.68      0.68       569
-
-# {'precision': 0.7118441600972082, 'recall': 0.6766256590509666, 'f1': 0.6776529851708551}
-
-# use outlet and title as features + bow of content?

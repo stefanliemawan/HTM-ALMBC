@@ -1,4 +1,3 @@
-import sys
 
 import pandas as pd
 import utils.functions as functions
