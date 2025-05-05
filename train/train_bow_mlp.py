@@ -28,6 +28,10 @@ x_train = vectorizer.fit_transform(train_df["features"].values)
 x_test = vectorizer.transform(test_df["features"].values)
 x_valid = vectorizer.transform(valid_df["features"].values)
 
+x_train = x_train.toarray()
+x_valid = x_valid.toarray()
+x_test = x_test.toarray()
+
 num_labels = len(pd.unique(train_df["labels"]))
 
 y_train = train_df["labels"].values
@@ -59,7 +63,7 @@ model.add(
 model.add(Dropout(0.2))
 model.add(Dense(num_labels, activation="softmax"))
 
-optimiser = tf.keras.optimizers.legacy.AdamW(learning_rate=2e-5)
+optimiser = tf.keras.optimizers.AdamW(learning_rate=2e-5)
 
 model.compile(
     loss="categorical_crossentropy", optimizer=optimiser, metrics=["accuracy"]
@@ -68,7 +72,7 @@ model.compile(
 model.fit(
     x_train,
     y_train,
-    epochs=15,
+    epochs=10,
     batch_size=8,
     validation_data=(x_valid, y_valid),
     class_weight=class_weights_dict,
