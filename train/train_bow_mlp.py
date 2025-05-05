@@ -59,7 +59,7 @@ model.add(
 model.add(Dropout(0.2))
 model.add(Dense(num_labels, activation="softmax"))
 
-optimiser = tf.keras.optimizers.AdamW(learning_rate=2e-5)
+optimiser = tf.keras.optimizers.legacy.AdamW(learning_rate=2e-5)
 
 model.compile(
     loss="categorical_crossentropy", optimizer=optimiser, metrics=["accuracy"]
@@ -75,7 +75,6 @@ model.fit(
     # callbacks=[lr_scheduler],
 )
 
-# Predictions and evaluation
 predictions = model.predict(x_test)
 y_pred = predictions.argmax(axis=1)
 print(classification_report(y_test, y_pred))
